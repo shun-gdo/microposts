@@ -122,4 +122,20 @@ class User extends Authenticatable
     {
         return $this->followings()->where('follow_id', $userId)->exists();
     }
+    
+     /**
+     * このユーザーとフォロー中ユーザーの投稿に絞り込む。
+     */
+    public function feed_microposts(){
+        
+        //このユーザがフォロー中のユーザid一覧を配列化
+        echo $this.followings();
+        $userIds = $this.followings()->pluck('users.id')->toArray();
+        
+        //自身のユーザidも配列に追加
+        $userIds[] = $this->id;
+        
+        //ユーザ達の所有する投稿に絞り込む
+        return Micropost::whereIn('user_id',$userIds);
+    }
 }
