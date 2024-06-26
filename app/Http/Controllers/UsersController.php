@@ -30,6 +30,7 @@ class UsersController extends Controller
         
         //ユーザ投稿一覧を作成日時の降順で取得
         $microposts = $user->microposts()->orderBy('created_at','desc')->paginate(10);
+        // dd($microposts);
         
         //ユーザ詳細ビューを表示
         return view('users.show',[
@@ -84,5 +85,21 @@ class UsersController extends Controller
             'user' => $user,
             'users' => $followers,
         ]);
+    }
+    
+    
+    public function favorites($id){
+        
+        $user = User::findOrFail($id);
+        $user->loadRelationshipCounts();
+        
+        $microposts = $user->favorites()->paginate(10);
+        // dd($microposts);
+        
+        return view('users.favorites',[
+            'user' => $user,
+            'microposts' => $microposts,
+        ]);
+        
     }
 }
