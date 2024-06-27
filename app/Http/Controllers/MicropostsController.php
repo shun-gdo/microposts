@@ -25,7 +25,10 @@ class MicropostsController extends Controller
         }
         
         // dashboardビューでそれらを表示
-        return view('dashboard', $data);
+        return view('dashboard',[
+            'user' => $user,
+            'microposts'=>$microposts,
+            ]);
     }
     
     public function store(Request $request){

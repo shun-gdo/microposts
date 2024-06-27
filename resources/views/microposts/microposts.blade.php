@@ -19,6 +19,27 @@
                             {{-- 投稿内容 --}}
                             <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                         </div>
+                        
+                        <div>
+                            @if (!$user->is_favorited($micropost->id))
+                                {{-- 投稿お気に入りボタン --}}
+                                <p>{{ $micropost->id }}</p>
+                                <form method="POST" action="{{ route('favorites.store', $micropost->id) }}">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit" class="btn btn-success btn-sm normal-case">Favorite</button>
+                                </form>
+                            @else
+                                {{-- 投稿お気に入りボタン --}}
+                                <form method="POST" action="{{ route('favorites.destroy', $micropost->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-Error btn-sm normal-case" 
+                                        onclick="return confirm('Unfavorite id = {{ $micropost->id }} ?')">Unfavorite</button>
+                                </form>
+                            @endif
+                        </div>
+                        
                         <div>
                             @if (Auth::id() == $micropost->user_id)
                                 {{-- 投稿削除ボタンのフォーム --}}
@@ -31,12 +52,11 @@
                             @endif
                         </div>
                     </div>
+
                 </li>
             @endforeach
         </ul>
         {{-- ページネーションのリンク --}}
         {{ $microposts->links() }}
-    @else
-     no microposts) 
     @endif
 </div>

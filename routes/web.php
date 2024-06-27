@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MicropostsController;
 use App\Http\Controllers\UserFollowController; 
+use App\Http\Controllers\FavoritePostsController; 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +36,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users',UsersController::class,['only' => ['index','show']]);
     Route::resource('microposts',MicropostsController::class,['only' => ['store','destroy']]);
+    Route::resource('favorites',FavoritePostsController::class,['only' => ['store','destroy']]);
+    
 });
 
 require __DIR__.'/auth.php';
