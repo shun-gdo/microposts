@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 class FavoritePostsController extends Controller
 {
     //
-     public function store(string $postId)
+     public function store(Request $request)
     {
+        // dd($request->all());
         // 認証済みユーザー（閲覧者）が、 idのユーザーをフォローする
-        \Auth::user()->favorite(intval($postId));
+        \Auth::user()->favorite($request->postId);
         // 前のURLへリダイレクトさせる
         return back();
     }

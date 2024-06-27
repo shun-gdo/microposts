@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users',UsersController::class,['only' => ['index','show']]);
     Route::resource('microposts',MicropostsController::class,['only' => ['store','destroy']]);
-    Route::resource('favorites',FavoritePostsController::class,['only' => ['store','destroy']]);
+    Route::resource('favorites',FavoritePostsController::class,['only' => ['store','destroy']])->names(['favorites.store','favorites.destroy']);
     
 });
 

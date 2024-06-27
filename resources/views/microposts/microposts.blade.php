@@ -12,7 +12,7 @@
                     <div>
                         <div>
                             {{-- 投稿の所有者のユーザー詳細ページへのリンク --}}
-                            <a class="link link-hover text-info" href="{{ route('users.show', $user->id) }}">{{ $micropost->name }}</a>
+                            <a class="link link-hover text-info" href="{{ route('users.show', $user->id) }}">{{ $user->name ? $user->name : $micropost->name }}</a>
                             <span class="text-muted text-gray-500">posted at {{ $micropost->created_at }}</span>
                         </div>
                         <div>
@@ -23,10 +23,10 @@
                         <div>
                             @if (!$user->is_favorited($micropost->id))
                                 {{-- 投稿お気に入りボタン --}}
-                                <p>{{ $micropost->id }}</p>
-                                <form method="POST" action="{{ route('favorites.store', $micropost->id) }}">
+                                <form method="POST" action="{{ route('favorites.store') }}">
                                     @csrf
                                     @method('POST')
+                                    <input type="hidden" name="postId" value="{{ $micropost->id }}"></input>
                                     <button type="submit" class="btn btn-success btn-sm normal-case">Favorite</button>
                                 </form>
                             @else
