@@ -22,13 +22,17 @@ class MicropostsController extends Controller
                 'user' => $user,
                 'microposts' => $microposts,
             ];
-        }
         
         // dashboardビューでそれらを表示
         return view('dashboard',[
             'user' => $user,
             'microposts'=>$microposts,
             ]);
+        }
+        
+        else {
+            return view('auth/login');
+        }
     }
     
     public function store(Request $request){
